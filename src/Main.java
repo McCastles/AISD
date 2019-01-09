@@ -17,26 +17,33 @@ public class Main {
 
         /* initial positions of the occupied cells */
         String obstacles = in.readLine();
-        board.update(board.stringIntoCells(obstacles));
+        board.update(obstacles);
         System.out.println("ok");
 
         /* receive the first command */
         String firstCommand = in.readLine();
+
+//        long time = System.currentTimeMillis();
 
         /* make a move OR respond to opponent's turn and then make a move */
         if (firstCommand.equals("start")) {
             board.makeMove();
         }
         else {
-            board.update(board.stringIntoCells(firstCommand));
+            board.update(firstCommand);
             board.makeMove();
         }
+
+//        System.out.println(System.currentTimeMillis() - time + " ms");
 
         /* game loop */
         while (true) {
             String command = in.readLine();
-            board.update(board.stringIntoCells(command));
+
+//            time = System.currentTimeMillis();
+            board.update(command);
             board.makeMove();
+//            System.out.println(System.currentTimeMillis() - time + " ms");
         }
     }
 }

@@ -3,26 +3,29 @@ import java.util.List;
 
 class Algorithm {
 
+    private static final int freeLimit = 15;
         /*
         {0;1},{1;0},{1;1},{2;1},{2;2}
         */
 
-    static Move decide (boolean [][] board) {
+    static Move decide (List<Cell> freeCells) {
 
         /* find all moves */
-        List<Move> moveList = getAllMoves(board);
-        Move decision;
+        List<Move> moveList = getAllMoves(freeCells);
+        Move finalDecision;
 
-        if (moveList.size() > 15)
-            decision = moveList.get(0);
+//        System.out.println("possible moves: " + moveList.size());
+
+        if (moveList.size() > freeLimit)
+            finalDecision = moveList.get(0);
         else
-            decision = smartMove(moveList);
+            finalDecision = smartMove(moveList);
 
-        /* the result is the move with max rate */
-        return decision;
+        return finalDecision;
     }
 
     private static Move smartMove(List<Move> moveList) {
+//        System.out.println("Smart move!");
         /* calculate rate for the first */
         Move decision = moveList.get(0);
         double maxRate = decision.calculateRate(moveList, decision);
@@ -35,40 +38,41 @@ class Algorithm {
                 decision = moveList.get(i);
             }
         }
+        /* the result is the move with max rate */
         return decision;
     }
 
     /* find all possible moves in the current situation */
-    private static List<Move> getAllMoves(boolean[][] originalBoard) {
-        List<Move> moveList = new ArrayList<>();
-        boolean [][] board = originalBoard.clone();
-        for (int i = 0; i < board.length; i++)
-            for (int j = 0; j < board.length; j++) {
-                if (!board[i][j]) {
-                    moveList.addAll( findMovesWithCurrentCell( board, i , j ) );
-                    board[i][j] = true;
-                }
-            }
-        return moveList;
+    private static List<Move> getAllMoves(List<Cell> cellsList) {
+        List <Move> neighbors = new ArrayList<>();
+        for (Cell cell : cellsList)
+            neighbors.addAll( findNeighbors(cell) );
+        return neighbors;
     }
 
     /* look around the Cell and produce moves */
-    private static List<Move> findMovesWithCurrentCell (boolean [][] board, int i, int j) {
+    private static List<Move> findNeighbors (Cell cell) {
+
+        boolean[][] board = Board.getBoard();
         List<Move> list = new ArrayList<>();
         int borderIndex = board.length - 1;
         int adjacent;
+        int x = cell.getX();
+        int y = cell.getY();
+
         /* right */
-        adjacent = (i == borderIndex) ? 0 : i + 1;
-        if (!board[adjacent][j]) list.add(new Move(new Cell(i, j), new Cell(adjacent, j)));
+        adjacent = (x == borderIndex) ? 0 : x + 1;
+        if (!board[adjacent][y]) list.add(new Move(new Cell(x, y), new Cell(adjacent, y)));
         /* down */
-        adjacent = (j == borderIndex) ? 0 : j + 1;
-        if (!board[i][adjacent]) list.add(new Move(new Cell(i, j), new Cell(i, adjacent)));
+        adjacent = (y == borderIndex) ? 0 : y + 1;
+        if (!board[x][adjacent]) list.add(new Move(new Cell(x, y), new Cell(x, adjacent)));
         /* left */
-        adjacent = (i == 0) ? borderIndex : i - 1;
-        if (!board[adjacent][j]) list.add(new Move(new Cell(i, j), new Cell(adjacent, j)));
+        adjacent = (x == 0) ? borderIndex : x - 1;
+        if (!board[adjacent][y]) list.add(new Move(new Cell(x, y), new Cell(adjacent, y)));
         /* up */
-        adjacent = (j == 0) ? borderIndex : j - 1;
-        if (!board[i][adjacent]) list.add(new Move(new Cell(i, j), new Cell(i, adjacent)));
+        adjacent = (y == 0) ? borderIndex : y - 1;
+        if (!board[x][adjacent]) list.add(new Move(new Cell(x, y), new Cell(x, adjacent)));
+
         return list;
     }
 
