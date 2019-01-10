@@ -46,12 +46,12 @@ class Algorithm {
     private static List<Move> getAllMoves(List<Cell> cellsList) {
         List <Move> neighbors = new ArrayList<>();
         for (Cell cell : cellsList)
-            neighbors.addAll( findNeighbors(cell) );
+            findNeighbors(neighbors, cell);
         return neighbors;
     }
 
     /* look around the Cell and produce moves */
-    private static List<Move> findNeighbors (Cell cell) {
+    private static void  findNeighbors (List<Move> neighbors, Cell cell) {
 
         boolean[][] board = Board.getBoard();
         List<Move> list = new ArrayList<>();
@@ -73,7 +73,8 @@ class Algorithm {
         adjacent = (y == 0) ? borderIndex : y - 1;
         if (!board[x][adjacent]) list.add(new Move(new Cell(x, y), new Cell(x, adjacent)));
 
-        return list;
+        for (Move move : list)
+            if (!neighbors.contains(move)) neighbors.add(move);
     }
 
 }

@@ -52,4 +52,15 @@ class Move {
         return good / total;
     }
 
+    @Override
+    public boolean equals (Object o) {
+        if (this == o) return true;
+        if (o == null || this.getClass() != o.getClass()) return false;
+        Move other = (Move) o;
+        Cell otherA = other.getCellA();
+        Cell otherB = other.getCellB();
+        return ( this.cellA.equals(otherA) &&  this.cellB.equals(otherB) ||
+                this.cellA.equals(otherB) && this.cellB.equals(otherA));
+    }
+
 }
