@@ -4,16 +4,17 @@ import java.util.List;
 class Algorithm {
 
     private static final int freeLimit = 15;
-        /*
-        {0;1},{1;0},{1;1},{2;1},{2;2}
-        */
+    private static int randomVar = 2;
 
     static Move decide (List<Cell> freeCells) {
         /* find all moves */
         List<Move> moveList = getAllMoves(freeCells);
         Move finalDecision;
-        if (moveList.size() > freeLimit)
-            finalDecision = moveList.get(0);
+        if (moveList.size() > freeLimit) {
+            int ala = moveList.size() / randomVar;
+            randomVar++;
+            finalDecision = moveList.get(ala);
+        }
         else
             finalDecision = smartMove(moveList);
         return finalDecision;

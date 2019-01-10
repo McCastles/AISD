@@ -31,6 +31,8 @@ class Board {
          Move move = Algorithm.decide(freeCells);
          board[move.getCellA().getX()][move.getCellA().getY()] = true;
          board[move.getCellB().getX()][move.getCellB().getY()] = true;
+         freeCells.remove(move.getCellA());
+         freeCells.remove(move.getCellB());
          move.print();
     }
 
