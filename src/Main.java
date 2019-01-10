@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 
 public class Main {
 
-
     public static void main (String [] args) throws IOException {
 
         /* scanner */
@@ -23,8 +22,6 @@ public class Main {
         /* receive the first command */
         String firstCommand = in.readLine();
 
-//        long time = System.currentTimeMillis();
-
         /* make a move OR respond to opponent's turn and then make a move */
         if (firstCommand.equals("start")) {
             board.makeMove();
@@ -34,16 +31,11 @@ public class Main {
             board.makeMove();
         }
 
-//        System.out.println(System.currentTimeMillis() - time + " ms");
-
         /* game loop */
         while (true) {
             String command = in.readLine();
-
-//            time = System.currentTimeMillis();
             board.update(command);
             board.makeMove();
-//            System.out.println(System.currentTimeMillis() - time + " ms");
         }
     }
 }

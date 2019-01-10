@@ -9,23 +9,17 @@ class Algorithm {
         */
 
     static Move decide (List<Cell> freeCells) {
-
         /* find all moves */
         List<Move> moveList = getAllMoves(freeCells);
         Move finalDecision;
-
-//        System.out.println("possible moves: " + moveList.size());
-
         if (moveList.size() > freeLimit)
             finalDecision = moveList.get(0);
         else
             finalDecision = smartMove(moveList);
-
         return finalDecision;
     }
 
     private static Move smartMove(List<Move> moveList) {
-//        System.out.println("Smart move!");
         /* calculate rate for the first */
         Move decision = moveList.get(0);
         double maxRate = decision.calculateRate(moveList, decision);

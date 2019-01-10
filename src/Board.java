@@ -28,9 +28,9 @@ class Board {
 
     /* make a decision and respond to judge */
      void makeMove () {
-//         long ttt = System.currentTimeMillis();
          Move move = Algorithm.decide(freeCells);
-//         System.out.println("decide time = " + (System.currentTimeMillis() - ttt));
+         board[move.getCellA().getX()][move.getCellA().getY()] = true;
+         board[move.getCellB().getX()][move.getCellB().getY()] = true;
          move.print();
     }
 
