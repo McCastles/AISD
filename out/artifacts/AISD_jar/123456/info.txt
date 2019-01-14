@@ -1,3 +1,0 @@
-Aleksei Haidukevich
-Aleksei Haidukevich
-java -jar AISD.jar
