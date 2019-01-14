@@ -23,7 +23,7 @@ public class Main {
         String firstCommand = in.readLine();
 
         /* make a move OR respond to opponent's turn and then make a move */
-        if (firstCommand.equals("start")) {
+        if (firstCommand.toLowerCase().equals("start")) {
             board.makeMove();
         }
         else {
